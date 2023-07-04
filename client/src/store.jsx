@@ -1,12 +1,12 @@
 import {configureStore } from '@reduxjs/toolkit'
-import firstReducer from './reducers';
+import postreducer from './reducers/reducer';
 
 
 
 
 const store = configureStore ({
     reducer: {
-        users : firstReducer
+        posts : postreducer
     }
 })
 

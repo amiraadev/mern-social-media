@@ -8,16 +8,36 @@ import './App.css';
   import memories from './assets/images/memories.png'
 
   import useStyles from './styles'
-import { useSelector } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
+import { getPosts } from './reducers/reducer';
+import { useEffect } from 'react';
 
-  
+import axios from 'axios'
+
+const url = process.env.REACT_APP_HOST_NAME+"posts"
+
 
 function App() {
    const classes = useStyles();
-   const test = useSelector((state) => state.users);
+   const test = useSelector((state) => state.posts.count);
+   const theHoleState = useSelector((state) => state.posts);
+   const dispach = useDispatch()
 
 
-console.log(test);
+     const handleClick = (e) => {
+
+         dispach(getPosts())
+
+     
+     }
+
+
+     useEffect(() => {
+     //  dispach(getPosts())
+     },[dispach])
+     
+   console.log(theHoleState);
+
   return (
     <Container maxWidth="lg">
         <AppBar className={classes.appBar} position='static' color='inherit'>
@@ -27,6 +47,9 @@ console.log(test);
          <Container>
             <Grid container justifyContent='space-between' alignItems='stretch'>
                  <Grid item xs={12} sm={7}>
+                    <button onClick={(e) => handleClick(e)}>dispach</button>
+                    <br></br>
+                      {test}
                       <Posts/>
                  </Grid>
                  <Grid item xs={12} sm={4}>
