@@ -1,35 +1,52 @@
-import { createAction, createSlice } from "@reduxjs/toolkit";
-import { getPostsAction } from "../actions/postsActions";
 
+
+
+
+
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getPosts } from '../actions/postsActions';
 
 const initialState = {
-    count: 0,
-    isLoading:false,
-    data:[]
-  };
+  count: 0,
+  isLoading: false,
+  data: [],
+};
 
 const postSlice = createSlice({
-    name : "posts",
-    initialState,
-    reducers : {
-        getPosts: createAction("posts/getPosts")
-    }, 
-    extraReducers: (builder) => {
-        builder
-          .addCase(getPostsAction.pending, (state) => {
-            state.isLoading = true;
-          })
-          .addCase(getPostsAction.fulfilled, (state, action) => {
-            state.isLoading = false;
-            console.log(action);
-            state.data = action;
-          })
-          .addCase(getPostsAction.rejected, (state, action) => {
-            state.isLoading = false;
-          });
-      }
+  name: 'posts',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getPosts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getPosts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(getPosts.rejected, (state, action) => {
+        state.isLoading = false;
+      });
+  },
+});
 
-})
 
-export const {getPosts} = postSlice.actions
-export default postSlice.reducer
+
+export const { reducer: postsReducer } = postSlice; // Export the reducer as postsReducer
+export default postSlice.reducer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

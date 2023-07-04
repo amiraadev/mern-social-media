@@ -9,9 +9,8 @@ import './App.css';
 
   import useStyles from './styles'
 import { useDispatch,useSelector } from 'react-redux';
-import { getPosts } from './reducers/reducer';
 import { useEffect } from 'react';
-
+import { getPosts } from './actions/postsActions';
 import axios from 'axios'
 
 const url = process.env.REACT_APP_HOST_NAME+"posts"
@@ -35,8 +34,8 @@ function App() {
      useEffect(() => {
      //  dispach(getPosts())
      },[dispach])
-     
-   console.log(theHoleState);
+
+    console.log(theHoleState);
 
   return (
     <Container maxWidth="lg">
