@@ -8,9 +8,16 @@ import './App.css';
   import memories from './assets/images/memories.png'
 
   import useStyles from './styles'
+import { useSelector } from 'react-redux';
+
+  
 
 function App() {
    const classes = useStyles();
+   const test = useSelector((state) => state.users);
+
+
+console.log(test);
   return (
     <Container maxWidth="lg">
         <AppBar className={classes.appBar} position='static' color='inherit'>
