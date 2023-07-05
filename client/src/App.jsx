@@ -9,14 +9,15 @@ import './App.css';
 
   import useStyles from './styles'
 import { useDispatch,useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getPosts } from './actions/postsActions';
 
 
 
 function App() {
+    const [currentId,setCurrentId] = useState(null)
    const classes = useStyles();
-   const theHoleState = useSelector((state) => state.posts);
+   const posts = useSelector((state) => state.posts.data);
    
    const dispach = useDispatch()
 
@@ -30,7 +31,7 @@ function App() {
       dispach(getPosts())
      },[dispach])
 
-
+// console.log(posts);
   return (
     <Container maxWidth="lg">
         <AppBar className={classes.appBar} position='static' color='inherit'>
@@ -40,10 +41,10 @@ function App() {
          <Container>
             <Grid container justifyContent='space-between' alignItems='stretch'>
                  <Grid item xs={12} sm={7}>
-                      <Posts/>
+                      <Posts setCurrentId={setCurrentId}/>
                  </Grid>
                  <Grid item xs={12} sm={4}>
-                      <Form/>
+                      <Form  currentId={currentId} setCurrentId={setCurrentId}/>
                  </Grid>
             </Grid>
          </Container>

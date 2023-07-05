@@ -20,7 +20,29 @@ export const createPosts = createAsyncThunk('posts/createPosts', async (newPost)
                     newPost, {
                     headers:{"Content-Type":'application/json'},
                    });
-   console.log(response);
+   return(response.data);
+  //  console.log(response);
+  } catch (error) {
+    throw error;
+  }
+});
+    
+export const updatePost = createAsyncThunk('posts/updatePosts', async (updatedPost) => {
+  try {
+    const { headers, ...postData } = updatedPost; // Exclude headers from the payload
+    const response = await axios.patch(`${url}/${updatedPost.id}`, postData);
+    return {...response.data , id:updatedPost.id}; 
+  } catch (error) {
+    throw error;
+  }
+});
+  
+    
+export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
+  try {
+    // const { headers, ...postData } = updatedPost; // Exclude headers from the payload
+    const response = await axios.delete(`${url}/${id}`);
+    return {...response.data , id:id}; 
   } catch (error) {
     throw error;
   }
