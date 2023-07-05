@@ -11,15 +11,14 @@ import './App.css';
 import { useDispatch,useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getPosts } from './actions/postsActions';
-import axios from 'axios'
 
-const url = process.env.REACT_APP_HOST_NAME+"posts"
 
 
 function App() {
    const classes = useStyles();
    const test = useSelector((state) => state.posts.count);
    const theHoleState = useSelector((state) => state.posts);
+   
    const dispach = useDispatch()
 
 

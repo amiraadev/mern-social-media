@@ -9,10 +9,10 @@ const app = express()
 const port = process.env.PORT || 5001
 
 app.use(cors({origin:"*"}));
-app.use('/posts',posteRoutes);
-
 app.use(bodyParser.json({limit:"30mb",extended:true}));
 app.use(bodyParser.urlencoded({limit:"30mb",extended:true}));
+app.use('/posts',posteRoutes);
+
 
 
 

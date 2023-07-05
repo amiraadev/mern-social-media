@@ -5,7 +5,7 @@
 
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getPosts } from '../actions/postsActions';
+import { getPosts ,createPosts} from '../actions/postsActions';
 
 const initialState = {
   count: 0,

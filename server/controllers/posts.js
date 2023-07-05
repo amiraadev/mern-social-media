@@ -1,5 +1,4 @@
-import PostMessage from "../models/postMessage.js"
-
+import postModel from "../models/postModel.js"
 
 export const getPosts = async (req,res) => {
 try {
@@ -11,17 +10,25 @@ try {
 }
 
 
-
 export const createPost = async (req,res) => {
-  const post = req.body
-  const newPost = new PostMessage(post)
-
+  const newPost = req.body ;
+  // console.log(newPost);
   try {
-    await newPost.save()
-    res.status(201).json(newPost)
-
+      //adding the post to the DB
+      const post = await postModel.create(newPost)
+      return res.status(201).json({
+                  message : "post has been added",
+                  _id: post.id,
+                  title: post.title,
+                  message: post.message,
+                  creator: post.creator,
+                  tags: post.tags,
+                  selectedFile: post.selectedFile,
+                  likeCount: post.likeCount,
+                  createdAt: post.createdAt,
+              })
   } catch (error) {
-    res.status(409).json({message:error.message})
-
+       return res.status(409).json({error:error.message})
   }
 }
+

@@ -13,6 +13,19 @@ export const getPosts = createAsyncThunk('posts/getPosts', async () => {
   }
 });
   
+export const createPosts = createAsyncThunk('posts/createPosts', async (newPost) => {
+  try {
+   const response = await axios.post(
+                    url,
+                    newPost, {
+                    headers:{"Content-Type":'application/json'},
+                   });
+   console.log(response);
+  } catch (error) {
+    throw error;
+  }
+});
+  
 
 
 
