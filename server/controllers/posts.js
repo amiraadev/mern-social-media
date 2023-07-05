@@ -2,8 +2,9 @@ import postModel from "../models/postModel.js"
 
 export const getPosts = async (req,res) => {
 try {
-    const postMessages = await PostMessage.find()
-    res.status(200).json({postMessages})
+    const postMessages = await postModel.find()
+    // res.status(200).json({postMessages})
+    res.status(200).json(postMessages)
 } catch (error) {
     res.status(400).json({message:error.message})
 }

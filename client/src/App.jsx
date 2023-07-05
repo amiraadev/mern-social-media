@@ -16,25 +16,20 @@ import { getPosts } from './actions/postsActions';
 
 function App() {
    const classes = useStyles();
-   const test = useSelector((state) => state.posts.count);
    const theHoleState = useSelector((state) => state.posts);
    
    const dispach = useDispatch()
 
 
      const handleClick = (e) => {
-
          dispach(getPosts())
-
-     
      }
 
 
      useEffect(() => {
-     //  dispach(getPosts())
+      dispach(getPosts())
      },[dispach])
 
-    console.log(theHoleState);
 
   return (
     <Container maxWidth="lg">
@@ -45,9 +40,6 @@ function App() {
          <Container>
             <Grid container justifyContent='space-between' alignItems='stretch'>
                  <Grid item xs={12} sm={7}>
-                    <button onClick={(e) => handleClick(e)}>dispach</button>
-                    <br></br>
-                      {test}
                       <Posts/>
                  </Grid>
                  <Grid item xs={12} sm={4}>

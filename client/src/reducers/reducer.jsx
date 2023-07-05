@@ -8,7 +8,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getPosts ,createPosts} from '../actions/postsActions';
 
 const initialState = {
-  count: 0,
   isLoading: false,
   data: [],
 };
