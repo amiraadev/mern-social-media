@@ -29,7 +29,7 @@ function App() {
 
      useEffect(() => {
       dispach(getPosts())
-     },[dispach])
+     },[currentId,dispach])
 
 // console.log(posts);
   return (

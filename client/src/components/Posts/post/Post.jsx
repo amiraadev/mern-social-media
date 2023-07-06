@@ -6,8 +6,23 @@ import moment from 'moment'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreHorizonIcon from '@material-ui/icons/MoreHoriz'
+import { deletePost,likePost } from '../../../actions/postsActions.js';
 
 function Post({post,setCurrentId}) {
+
+   const dispatch = useDispatch()
+   
+  const handleDelete = (e) => {
+    e.preventDefault() 
+    dispatch(deletePost(post._id)) 
+    
+ }
+  const handleLike = (e) => {
+    e.preventDefault() 
+    dispatch(likePost(post._id)) 
+    
+ }
+ 
   // const posts = useSelector((state)=>state.posts)
   const classes = useStyles();
   return (
@@ -31,12 +46,13 @@ function Post({post,setCurrentId}) {
       </CardContent>
 
       <CardActions className={classes.cardActions}>
-        <Button color="primary" size='small' onClick={() => {}}>
+        <Button color="primary" size='small' onClick={(e) => {handleLike(e)}}>
            <ThumbUpAltIcon fontSize='small'/>
+           { post.likeCount+" " } 
+           {/* &nbsp; */}
            Like 
-           {post.likeCount}
         </Button>
-        <Button color="primary" size='small' onClick={() => {}}>
+        <Button color="primary" size='small' onClick={(e) => {handleDelete(e)}}>
            <DeleteIcon fontSize='small'/>
            Delete 
         </Button>   

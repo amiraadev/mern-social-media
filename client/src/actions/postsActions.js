@@ -47,6 +47,16 @@ export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
     throw error;
   }
 });
+   
+export const likePost = createAsyncThunk('posts/likePost', async (id) => {
+  try {
+    // const { headers, ...postData } = updatedPost; // Exclude headers from the payload
+    const response = await axios.patch(`${url}/${id}/likePost`);
+    return {...response.data , id:id}; 
+  } catch (error) {
+    throw error;
+  }
+});
   
 
 

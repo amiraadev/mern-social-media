@@ -5,7 +5,7 @@
 
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getPosts ,createPosts,updatePost,deletePost} from '../actions/postsActions';
+import { getPosts ,createPosts,updatePost,deletePost,likePost} from '../actions/postsActions';
 
 const initialState = {
   isLoading: false,
@@ -60,6 +60,18 @@ const postSlice = createSlice({
         );
       })
       .addCase(deletePost.rejected, (state, action) => {
+        state.isLoading = false;
+      })///////////////////////////////////////LIKE POST
+      .addCase(likePost.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(likePost.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = state.data.map((post) =>
+        post._id === action.payload.id ? action.payload : post
+        );
+      })
+      .addCase(likePost.rejected, (state, action) => {
         state.isLoading = false;
       })
       ;
