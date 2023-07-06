@@ -1,54 +1,47 @@
 import './App.css';
 
 
-  import Form from './components/Form/Form.jsx';
-  import Posts from './components/Posts/Posts.jsx';
-
-  import {Container,AppBar,Typography,Grid} from '@material-ui/core'
-  import memories from './assets/images/memories.png'
-
-  import useStyles from './styles'
 import { useDispatch,useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getPosts } from './actions/postsActions';
+import {Container} from '@material-ui/core'
 
 
+import useStyles from './styles'
+//Components
+
+import Principal from './components/Principal/Principal';
+
+import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
+import Auth from './components/Auth/Auth';
+import NavBar from './components/NavBar/NavBar';
+import Home from './components/Home/Home';
 
 function App() {
-    const [currentId,setCurrentId] = useState(null)
+   const [currentId,setCurrentId] = useState(null)
    const classes = useStyles();
    const posts = useSelector((state) => state.posts.data);
    
    const dispach = useDispatch()
-
-
-     const handleClick = (e) => {
-         dispach(getPosts())
-     }
-
-
      useEffect(() => {
       dispach(getPosts())
-     },[currentId,dispach])
+     },[dispach])
+     // },[currentId,dispach])
 
-// console.log(posts);
   return (
+<Router>
+
     <Container maxWidth="lg">
-        <AppBar className={classes.appBar} position='static' color='inherit'>
-           <Typography className={classes.heading} variant='h2' align='center'>Memories</Typography>
-           <img  className={classes.image} src={memories} alt='memories' height="60"></img>
-        </AppBar> 
-         <Container>
-            <Grid container justifyContent='space-between' alignItems='stretch'>
-                 <Grid item xs={12} sm={7}>
-                      <Posts setCurrentId={setCurrentId}/>
-                 </Grid>
-                 <Grid item xs={12} sm={4}>
-                      <Form  currentId={currentId} setCurrentId={setCurrentId}/>
-                 </Grid>
-            </Grid>
-         </Container>
-    </Container>
+          <NavBar/>
+          <Routes>
+               <Route path='/' element={<Home currentId={currentId} setCurrentId={setCurrentId} />} />
+               <Route path='/auth' element={<Auth/>} />
+          </Routes>
+   </Container>
+
+
+         
+</Router>
   );
 }
 
