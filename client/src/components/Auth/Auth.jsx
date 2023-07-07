@@ -1,20 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Avatar,Button,Paper,Grid,Typography,Container} from '@material-ui/core'
+
 // import {GoogleLogin} from 'react-google-login'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
+import jwt_decode from "jwt-decode";
+
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import useStyles from './authStyle'
 import Input from './Input'
 import Icon from './Icon'
+import { logPayload } from '../../reducers/auth';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function Auth() {
-
+   const authParam = useSelector((state)=>state.auth)
     const classes = useStyles();
+
+    // const [User, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+    const navigate = useNavigate()
+
     const [isSignup, setisSignup] = useState(false)
     const handleSubmit = null;
     const [showPassword, setshowPassword] = useState(false)
+    const dispatch = useDispatch()
     function handleChange() {
         
     }
@@ -23,13 +35,39 @@ function Auth() {
         setisSignup((prevIsSignup) => !prevIsSignup)
         handleShowPassword(false)
     }
-    const googleSuccess = (res) =>{
-   console.log(res);
+
+
+    const googleSuccess =async (res) =>{
+        const token  = res?.credential;
+          const decodedToken = jwt_decode(token);
+          const userCredential = {picture:decodedToken.picture,name:decodedToken.name,email:decodedToken.email,token:token}
+        try {
+            dispatch(logPayload(userCredential))
+            navigate('/')
+            window.location.reload();
+
+        } catch (error) {
+            
+        }
+        //  console.log(decodedToken);
     }
     const googleFailure = () =>{
         console.log("Google sign in was unsuccessful . Try Again Later");
     }
  
+    const googleLogout = () => {
+        // Perform logout logic here
+        // ...
+      
+        // Refresh the page
+        window.location.reload();
+      };
+    //   console.log("parammmm",authParam);
+
+      useEffect(() => {
+         console.log(authParam);
+        //  console.log(User.name);
+      },[authParam,dispatch])
   return (
     <Container component="main" maxWidth="xs"> 
         <Paper className={classes.paper} elevation={3}>
@@ -50,31 +88,39 @@ function Auth() {
                     { isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
                 </Grid>
 
-                <GoogleOAuthProvider clientId='1023016021226-85co271q0b34rnq3m36dk8vbodeillqc.apps.googleusercontent.com' >
-                        <GoogleLogin 
-                        clientId='GOOGLE ID'
-                        render={(renderProps) => (
-                            <Button 
-                                className={classes.googleButton} 
-                                color='primary' 
-                                fullWidth 
-                                onClick={renderProps.onClick} 
-                                disabled={renderProps.disabled}
-                                startIcon={<Icon />}
-                                variant='contained'>
-                                Google Sign In
-                            </Button>
-                        )}
-                        onSuccess={googleSuccess}
-                        onFailure={googleFailure}
-                        cookiePolicy='single_host_origin'
-                        />
-                </GoogleOAuthProvider>
-                
+
 
                 <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                          { isSignup ? 'Sign Up' : 'Sign In' }
                </Button>
+
+
+                <GoogleOAuthProvider  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID} >
+                        <GoogleLogin 
+                        // clientId='GOOGLE ID'
+                        // fullWidth
+                        // render={(renderProps) => (
+                        //     <Button 
+                        //         className={classes.googleButton} 
+                        //         color='primary' 
+                        //         fullWidth 
+                        //         onClick={renderProps.onClick} 
+                        //         disabled={renderProps.disabled}
+                        //         startIcon={<Icon />}
+                        //         variant='contained'>
+                        //         Google Sign In
+                        //     </Button>
+                        // )}
+
+                         
+                        onSuccess={googleSuccess}
+                        onFailure={googleFailure}
+                        logout={googleLogout}
+                        select_by='link'
+                        />
+                </GoogleOAuthProvider>
+                
+          
                <Grid container justifyContent='flex-end'>
                     <Grid item>
                        <Button onClick={switchMode} >
