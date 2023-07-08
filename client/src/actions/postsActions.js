@@ -28,14 +28,15 @@ export const createPosts = createAsyncThunk('posts/createPosts', async (newPost)
 });
     
 export const updatePost = createAsyncThunk('posts/updatePosts', async (updatedPost) => {
+
+   console.log(` ${updatedPost.token}`);
+  // console.log(`${url}/${updatedPost.id}`);
   try {
     const { headers, ...postData } = updatedPost; // Exclude headers from the payload
     const response = await axios.patch(`${url}/${updatedPost.id}`, postData,{
     headers: {
-      // Set your custom headers here
-      // Authorization: `Bearer ${state.auth.token}`, // Example: Authorization header with a token from the state
-      'Content-Type': 'application/json', // Example: Content-Type header
-      // Add more headers as needed
+       Authorization: `Bearer ${updatedPost.token}`, 
+      'Content-Type': 'application/json',
     },
   });
     return {...response.data , id:updatedPost.id}; 

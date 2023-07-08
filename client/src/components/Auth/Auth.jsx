@@ -81,10 +81,9 @@ function Auth() {
       };
     //   console.log("parammmm",authParam);
 
-      useEffect(() => {
-         console.log(authParam);
-        //  console.log(User.name);
-      },[authParam,dispatch])
+      // useEffect(() => {
+      //    console.log(authParam);
+      // },[authParam,dispatch])
   return (
     <Container component="main" maxWidth="xs"> 
         <Paper className={classes.paper} elevation={3}>

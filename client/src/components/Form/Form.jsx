@@ -6,8 +6,12 @@ import { createPosts ,updatePost } from '../../actions/postsActions.js'
 import { useDispatch,useSelector } from 'react-redux';
 
 function Form({currentId,setCurrentId}) {
-
   const post = useSelector((state)=> currentId ? state.posts.data.find((p) => p._id == currentId) : null)
+  const authParam = useSelector((state)=>state.auth)
+  const token = authParam.authData?.token;
+  
+
+  
   const [postData , setPostData] = useState({
     title:" ",
     message:" ",
@@ -26,10 +30,10 @@ function Form({currentId,setCurrentId}) {
   const handleSubmit = (e) => {
      e.preventDefault()  
      if(currentId){
-        dispatch(updatePost({ ...postData, id: currentId }))
+        dispatch(updatePost({ ...postData, id: currentId,token }))
         clear()
      } else {
-       dispatch(createPosts(postData))
+       dispatch(createPosts({postData,token}))
        clear()
      }
   }
@@ -38,6 +42,12 @@ function Form({currentId,setCurrentId}) {
     setCurrentId(0);
     setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
   }
+
+     useEffect(() => {
+          console.log(authParam);
+         console.log(token);
+      },[authParam,dispatch])
+
   return (
     <Paper className={classes.paper}>
         <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
