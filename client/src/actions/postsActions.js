@@ -17,9 +17,12 @@ export const createPosts = createAsyncThunk('posts/createPosts', async (newPost)
   try {
    const response = await axios.post(
                     url,
-                    newPost, {
-                    headers:{"Content-Type":'application/json'},
-                   });
+                    newPost,{
+                      headers: {
+                         Authorization: `Bearer ${newPost.token}`, 
+                        'Content-Type': 'application/json',
+                      },
+                    });
    return(response.data);
   //  console.log(response);
   } catch (error) {
@@ -46,21 +49,31 @@ export const updatePost = createAsyncThunk('posts/updatePosts', async (updatedPo
 });
   
     
-export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
+export const deletePost = createAsyncThunk('posts/deletePost', async (deletedPost) => {
   try {
     // const { headers, ...postData } = updatedPost; // Exclude headers from the payload
-    const response = await axios.delete(`${url}/${id}`);
-    return {...response.data , id:id}; 
+    const response = await axios.delete(`${url}/${deletedPost.id}`,{
+      headers: {
+         Authorization: `Bearer ${deletedPost.token}`, 
+        'Content-Type': 'application/json',
+      },
+    });
+    return {...response.data , id:deletedPost.id}; 
   } catch (error) {
     throw error;
   }
 });
    
-export const likePost = createAsyncThunk('posts/likePost', async (id) => {
+export const likePost = createAsyncThunk('posts/likePost', async (likedPost) => {
   try {
     // const { headers, ...postData } = updatedPost; // Exclude headers from the payload
-    const response = await axios.patch(`${url}/${id}/likePost`);
-    return {...response.data , id:id}; 
+    const response = await axios.patch(`${url}/${likedPost.id}/likePost`,{
+      headers: {
+         Authorization: `Bearer ${likedPost.token}`, 
+        'Content-Type': 'application/json',
+      },
+    });
+    return {...response.data , id:likedPost.id}; 
   } catch (error) {
     throw error;
   }

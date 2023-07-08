@@ -9,17 +9,19 @@ import MoreHorizonIcon from '@material-ui/icons/MoreHoriz'
 import { deletePost,likePost } from '../../../actions/postsActions.js';
 
 function Post({post,setCurrentId}) {
-   const checkAuth = useSelector((state)=>state.auth)
+   const authParam = useSelector((state)=>state.auth)
+   const token = authParam.authData?.token;
+   
    const dispatch = useDispatch()
    
   const handleDelete = (e) => {
     e.preventDefault() 
-    dispatch(deletePost(post._id)) 
+    dispatch(deletePost({id:post._id,token})) 
     
  }
   const handleLike = (e) => {
     e.preventDefault() 
-    dispatch(likePost(post._id)) 
+    dispatch(likePost({id:post._id,token})) 
     
  }
  

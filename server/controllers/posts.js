@@ -13,7 +13,7 @@ try {
 
 
 export const createPost = async (req,res) => {
-  const newPost = req.body ;
+  const newPost = req.body.postData ;
   // console.log(newPost);
   try {
       //adding the post to the DB
@@ -37,11 +37,12 @@ export const createPost = async (req,res) => {
 export const updatePost = async (req,res) => {
   const {id:_id} = req.params ;
   const post = req.body ;
-
+  console.log(req.userEmail);
   if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id')
 
   try {
     const updatedPost = await postModel.findByIdAndUpdate(_id,post,{new:true})
+    // console.log(updatedPost);
       return res.status(201).json({
                   message : "post has been updated",
                   _id: updatedPost.id,
