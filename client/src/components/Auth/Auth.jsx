@@ -12,6 +12,7 @@ import useStyles from './authStyle'
 import Input from './Input'
 import Icon from './Icon'
 import { logPayload } from '../../reducers/auth';
+import { login, register } from '../../actions/usersAction';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -24,13 +25,29 @@ function Auth() {
     const navigate = useNavigate()
 
     const [isSignup, setisSignup] = useState(false)
-    const handleSubmit = null;
     const [showPassword, setshowPassword] = useState(false)
+    const [userData, setUserData] = useState({firstName:" ",lastName:" ",email:" ",password:" ",confirmPassword:" "})
+
     const dispatch = useDispatch()
-    function handleChange() {
-        
+
+    function handleChange(e) {
+      setUserData({...userData,[e.target.name]:e.target.value})
+
     }
+
+    function handleSubmit(e) {
+
+      if(isSignup){
+
+        dispatch(register({userData,navigate}))
+      } else {
+         dispatch(login({userData :{email:userData.email,password:userData.password},navigate}))     
+      }
+       e.preventDefault();
+    }
+
     const handleShowPassword = () => setshowPassword((prevShowPassword) => !prevShowPassword)
+
     const switchMode = () => {
         setisSignup((prevIsSignup) => !prevIsSignup)
         handleShowPassword(false)
@@ -75,7 +92,7 @@ function Auth() {
                 <LockOutlinedIcon />
             </Avatar>
             <Typography className={classes.heading} variant="h5" >{isSignup ? 'Sign Up' : 'Sign In'}</Typography>
-            <form className={classes.form} onSubmit={handleSubmit}>
+            <form className={classes.form} onSubmit={(e) => handleSubmit(e)}>
                 <Grid container  spacing={2}>
                 { isSignup && (
                         <>
@@ -96,23 +113,7 @@ function Auth() {
 
 
                 <GoogleOAuthProvider  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID} >
-                        <GoogleLogin 
-                        // clientId='GOOGLE ID'
-                        // fullWidth
-                        // render={(renderProps) => (
-                        //     <Button 
-                        //         className={classes.googleButton} 
-                        //         color='primary' 
-                        //         fullWidth 
-                        //         onClick={renderProps.onClick} 
-                        //         disabled={renderProps.disabled}
-                        //         startIcon={<Icon />}
-                        //         variant='contained'>
-                        //         Google Sign In
-                        //     </Button>
-                        // )}
-
-                         
+                    <GoogleLogin           
                         onSuccess={googleSuccess}
                         onFailure={googleFailure}
                         logout={googleLogout}

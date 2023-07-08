@@ -1,6 +1,7 @@
 import {configureStore } from '@reduxjs/toolkit'
 import postreducer from './reducers/reducer';
 import authreducer from './reducers/auth';
+import usersReducer from './reducers/users';
 
 
 
@@ -8,6 +9,7 @@ import authreducer from './reducers/auth';
 const store = configureStore ({
     reducer: {
         posts : postreducer,
+        users : usersReducer,
         auth : authreducer
     }
 })

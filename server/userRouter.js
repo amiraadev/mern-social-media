@@ -5,7 +5,7 @@ import loginUser from "./controllers/login.js";
 const userRoutes = express.Router();
 
 userRoutes.post('/register', registerUser)
- userRoutes.get('/login',loginUser)
+ userRoutes.post('/login',loginUser)
 // userRoutes.patch('/:id', updatePost)
 // userRoutes.delete('/:id', deletePost)
 // userRoutes.patch('/:id/likePost', likePost)

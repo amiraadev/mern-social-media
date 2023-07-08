@@ -8,6 +8,8 @@ import {Link} from 'react-router-dom'
 import {AppBar,Typography,Toolbar,Avatar,Button} from '@material-ui/core'
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../../reducers/auth';
+import jwt_decode from "jwt-decode";
+
 
 
 function NavBar() {
@@ -17,6 +19,8 @@ function NavBar() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const authParam = useSelector((state)=>state.auth)
+
     const handleLogout =() => {
       dispatch(logOut());
       navigate('/auth')
@@ -24,11 +28,12 @@ function NavBar() {
     }
 
     useEffect(() => {
-     const token = user?.token;
+      const token = user?.token;
      // JWT
      setUser(JSON.parse(localStorage.getItem('profile')))
+   },[localStorage.getItem('profile')])
 
-   },[])
+
 
   return (
        <AppBar className={classes.appBar} style={{flexDirection:"row"}} position="static" color="inherit">
@@ -42,7 +47,8 @@ function NavBar() {
         <Toolbar className={classes.toolbar}>
           {user ? (
             <div className={classes.profile}>
-              <Avatar className={classes.purple} alt={user?.name} src={user?.picture}>{user?.name.charAt(0)}</Avatar>
+              {/* <Avatar className={classes.purple} alt={user?.name} src={user?.picture}>{user?.name.charAt(0)}</Avatar> */}
+              <Avatar className={classes.purple} alt={user?.name} src={user?.picture}>{}</Avatar>
               <Typography className={classes.userName} variant="h6">{user?.name}</Typography>
               <Button variant="contained" className={classes.logout} color="secondary" onClick={()=>handleLogout()}>Logout</Button>
             </div>
