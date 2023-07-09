@@ -66,10 +66,11 @@ export const likePost = createAsyncThunk('posts/likePost', async (likedPost) => 
 
 
 export const deletePost = createAsyncThunk('posts/deletePost', async (deletedPost) => {
+  console.log(deletedPost);
 
   try {
     const { headers, ...postData } = deletedPost; // Exclude headers from the payload
-    const response = await axios.delete(`${url}/${deletedPost.id}`, postData,{
+    const response = await axios.delete(`${url}/${deletedPost.id}`,{
     headers: {
        Authorization: `Bearer ${deletedPost.token}`, 
       'Content-Type': 'application/json',

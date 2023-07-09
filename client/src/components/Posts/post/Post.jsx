@@ -10,6 +10,7 @@ import { deletePost,likePost } from '../../../actions/postsActions.js';
 
 function Post({post,setCurrentId}) {
    const authParam = useSelector((state)=>state.auth)
+   const singlePost = useSelector((state)=>state.posts)
    const token = authParam.authData?.token;
    
    const dispatch = useDispatch()
@@ -25,7 +26,7 @@ function Post({post,setCurrentId}) {
     dispatch(likePost({id:post._id,token})) 
     
  }
- 
+  console.log("singlePost",post.likes.length);
   // const posts = useSelector((state)=>state.posts)
   const classes = useStyles();
   return (
@@ -51,7 +52,7 @@ function Post({post,setCurrentId}) {
       <CardActions className={classes.cardActions}>
         <Button color="primary" size='small' onClick={(e) => {handleLike(e)}}>
            <ThumbUpAltIcon fontSize='small'/>
-           { post.likeCount+" " } 
+           { post.likes.length +" " } 
            {/* &nbsp; */}
            Like 
         </Button>
