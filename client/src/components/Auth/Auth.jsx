@@ -10,7 +10,6 @@ import jwt_decode from "jwt-decode";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import useStyles from './authStyle'
 import Input from './Input'
-import Icon from './Icon'
 import { logPayload } from '../../reducers/auth';
 import { login, register } from '../../actions/usersAction';
 

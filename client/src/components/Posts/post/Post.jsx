@@ -1,8 +1,7 @@
 import React from 'react'
 import useStyles from './postStyle.js'
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import {Card,CardActions,CardContent,CardMedia,Button,Typography,} from '@material-ui/core'
-import { red, blue, green } from '@material-ui/core/colors';
 
 import moment from 'moment'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
@@ -25,13 +24,10 @@ function Post({post,setCurrentId}) {
  }
   const handleLike = (e) => {
     e.preventDefault() 
-   //  console.log({id:post._id,token});
     dispatch(likePost({id:post._id,token})) 
     
  }
  
-//  console.log(userrMail);
-//   console.log(post.likes);
   return (
    <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />
@@ -40,9 +36,10 @@ function Post({post,setCurrentId}) {
         <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
       </div>  
       <div className={classes.overlay2} >
-        <Button style={{color:"white"}} size='small' onClick={() => setCurrentId(post._id)}>
+        {userrMail === post.user && <Button style={{color:"white"}} size='small' onClick={() => setCurrentId(post._id)}>
            <MoreHorizonIcon fontSize='medium'/>
-        </Button>    
+        </Button>  }
+     
       </div> 
       <div className={classes.details} >  
            <Typography variant='body2' color='textSecondary'>{post.tags.map((tag) =>`#${tag} ` )}</Typography>
