@@ -21,6 +21,7 @@ function Post({post,setCurrentId}) {
  }
   const handleLike = (e) => {
     e.preventDefault() 
+    console.log({id:post._id,token});
     dispatch(likePost({id:post._id,token})) 
     
  }

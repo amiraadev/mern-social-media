@@ -47,37 +47,74 @@ export const updatePost = createAsyncThunk('posts/updatePosts', async (updatedPo
     throw error;
   }
 });
-  
     
-export const deletePost = createAsyncThunk('posts/deletePost', async (deletedPost) => {
-  try {
-    // const { headers, ...postData } = updatedPost; // Exclude headers from the payload
-    const response = await axios.delete(`${url}/${deletedPost.id}`,{
-      headers: {
-         Authorization: `Bearer ${deletedPost.token}`, 
-        'Content-Type': 'application/json',
-      },
-    });
-    return {...response.data , id:deletedPost.id}; 
-  } catch (error) {
-    throw error;
-  }
-});
-   
 export const likePost = createAsyncThunk('posts/likePost', async (likedPost) => {
+
   try {
-    // const { headers, ...postData } = updatedPost; // Exclude headers from the payload
-    const response = await axios.patch(`${url}/${likedPost.id}/likePost`,{
-      headers: {
-         Authorization: `Bearer ${likedPost.token}`, 
-        'Content-Type': 'application/json',
-      },
-    });
+    const { headers, ...postData } = likedPost; // Exclude headers from the payload
+    const response = await axios.patch(`${url}/${likedPost.id}/likePost`, postData,{
+    headers: {
+       Authorization: `Bearer ${likedPost.token}`, 
+      'Content-Type': 'application/json',
+    },
+  });
     return {...response.data , id:likedPost.id}; 
   } catch (error) {
     throw error;
   }
 });
+
+
+export const deletePost = createAsyncThunk('posts/deletePost', async (deletedPost) => {
+
+  try {
+    const { headers, ...postData } = deletedPost; // Exclude headers from the payload
+    const response = await axios.delete(`${url}/${deletedPost.id}`, postData,{
+    headers: {
+       Authorization: `Bearer ${deletedPost.token}`, 
+      'Content-Type': 'application/json',
+    },
+  });
+    return {...response.data , id:deletedPost.id}; 
+  } catch (error) {
+    throw error;
+  }
+});
+
+
+  
+    
+// export const deletePost = createAsyncThunk('posts/deletePost', async (deletedPost) => {
+//   try {
+//     // const { headers, ...postData } = updatedPost; // Exclude headers from the payload
+//     const response = await axios.delete(`${url}/${deletedPost.id}`,{
+//       headers: {
+//          Authorization: `Bearer ${deletedPost.token}`, 
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     return {...response.data , id:deletedPost.id}; 
+//   } catch (error) {
+//     throw error;
+//   }
+// });
+
+// export const likePost = createAsyncThunk('posts/likePost', async (likedPost) => {
+//   // console.log(likedPost.token);
+//   try {
+//      const { headers, ...postData } = likedPost; // Exclude headers from the payload
+//     const response = await axios.patch(`${url}/${likedPost.id}/likePost`,{
+//       headers: {
+//          Authorization: `Bearer ${likedPost.token}`, 
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     return {...response.data , id:likedPost.id}; 
+//   } catch (error) {
+//     throw error;
+//   }
+// });
+   
   
 
 

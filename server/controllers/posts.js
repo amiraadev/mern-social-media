@@ -89,9 +89,20 @@ export const likePost = async (req,res) => {
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id')
 
+  console.log(req.userEmail);
+  if (!req.userEmail) return res.status(401).send('Not authorized')
   try {
     const post = await postModel.findByIdAndUpdate(id)
-    const updatedPost = await postModel.findByIdAndUpdate(id,{likeCount:post.likeCount + 1},{new:true})
+    const index = post.likes.findIndex((email) => email === String(req.userEmail) )
+    // console.log(index,"index");
+
+    if(index == -1){
+      post.likes.push(req.userEmail)
+    } else
+    {
+      post.likes.filter((email) => email !== String(req.userEmail) )
+    }
+    const updatedPost = await postModel.findByIdAndUpdate(id,post,{new:true})
       return res.status(201).json({
                   Message : "post has been liked",
                   _id: updatedPost.id,
@@ -99,7 +110,7 @@ export const likePost = async (req,res) => {
                   message: updatedPost.message,
                   creator: updatedPost.creator,
                   tags: updatedPost.tags,
-                  likeCount: updatedPost.likeCount,
+                  likes: updatedPost.likes,
                   createdAt: updatedPost.createdAt,
                   selectedFile: updatedPost.selectedFile,
               })
