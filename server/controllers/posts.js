@@ -25,12 +25,13 @@ export const createPost = async (req,res) => {
       return res.status(201).json({
                   message : "post has been added",
                   _id: post.id,
+                  user: post.user,
                   title: post.title,
                   message: post.message,
                   creator: post.creator,
                   tags: post.tags,
                   selectedFile: post.selectedFile,
-                  likeCount: post.likeCount,
+                  likes: post.likes,
                   createdAt: post.createdAt,
               })
   } catch (error) {

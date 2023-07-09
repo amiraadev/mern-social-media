@@ -12,6 +12,7 @@ function Post({post,setCurrentId}) {
    const classes = useStyles();
 
    const token =JSON.parse(localStorage.getItem('profile'))?.token;
+   const userrMail =JSON.parse(localStorage.getItem('profile'))?.email;
    
    const dispatch = useDispatch()
    
@@ -27,6 +28,8 @@ function Post({post,setCurrentId}) {
     
  }
  
+ console.log(userrMail);
+ console.log(post);
   return (
    <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />
@@ -50,14 +53,15 @@ function Post({post,setCurrentId}) {
       <CardActions className={classes.cardActions}>
         <Button color="primary" size='small' onClick={(e) => {handleLike(e)}}>
            <ThumbUpAltIcon fontSize='small'/>
-           { post.likes.length +" " } 
+           { post.likes?.length +" " } 
            {/* &nbsp; */}
            Like 
         </Button>
-        <Button color="primary" size='small' onClick={(e) => {handleDelete(e)}}>
+        {(userrMail == post.user) &&  <Button color="primary" size='small' onClick={(e) => {handleDelete(e)}}>
            <DeleteIcon fontSize='small'/>
            Delete 
-        </Button>   
+        </Button> }
+         
        </CardActions>
 
    </Card>

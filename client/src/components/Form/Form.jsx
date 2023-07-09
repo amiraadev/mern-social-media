@@ -43,7 +43,7 @@ function Form({currentId,setCurrentId}) {
   }
 
   useEffect(() => {
-    console.log(token);
+    // console.log(token);
  },[localStorage.getItem('profile')])
 
   return (

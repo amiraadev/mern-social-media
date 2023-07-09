@@ -9,7 +9,7 @@ function Posts({setCurrentId}) {
 
   const posts = useSelector((state)=>state.posts.data)
 
-   console.log("all posts :",posts);
+  //  console.log("all posts :",posts);
   return (
     !posts.length ? <CircularProgress/> : (
       <Grid className={classes.container} container alignItems='stretch' spacing={3}>
