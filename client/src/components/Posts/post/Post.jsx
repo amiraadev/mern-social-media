@@ -9,9 +9,9 @@ import MoreHorizonIcon from '@material-ui/icons/MoreHoriz'
 import { deletePost,likePost } from '../../../actions/postsActions.js';
 
 function Post({post,setCurrentId}) {
-   const authParam = useSelector((state)=>state.auth)
-   const singlePost = useSelector((state)=>state.posts)
-   const token = authParam.authData?.token;
+   const classes = useStyles();
+
+   const token =JSON.parse(localStorage.getItem('profile'))?.token;
    
    const dispatch = useDispatch()
    
@@ -26,9 +26,7 @@ function Post({post,setCurrentId}) {
     dispatch(likePost({id:post._id,token})) 
     
  }
-  console.log("singlePost",post.likes.length);
-  // const posts = useSelector((state)=>state.posts)
-  const classes = useStyles();
+ 
   return (
    <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />

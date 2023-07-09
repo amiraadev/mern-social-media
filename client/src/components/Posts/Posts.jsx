@@ -7,10 +7,9 @@ import {Grid,CircularProgress} from '@material-ui/core'
 function Posts({setCurrentId}) {
   const classes = useStyles();
 
-  const checkAuth = useSelector((state)=>state.auth)
   const posts = useSelector((state)=>state.posts.data)
 
-  // console.log("all posts :",posts);
+   console.log("all posts :",posts);
   return (
     !posts.length ? <CircularProgress/> : (
       <Grid className={classes.container} container alignItems='stretch' spacing={3}>

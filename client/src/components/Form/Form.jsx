@@ -7,8 +7,7 @@ import { useDispatch,useSelector } from 'react-redux';
 
 function Form({currentId,setCurrentId}) {
   const post = useSelector((state)=> currentId ? state.posts.data.find((p) => p._id == currentId) : null)
-  const authParam = useSelector((state)=>state.auth)
-  const token = authParam.authData?.token;
+  const token =JSON.parse(localStorage.getItem('profile'))?.token;
   
 
   
@@ -43,10 +42,9 @@ function Form({currentId,setCurrentId}) {
     setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
   }
 
-     useEffect(() => {
-          console.log(authParam);
-         console.log(token);
-      },[authParam,dispatch])
+  useEffect(() => {
+    console.log(token);
+ },[localStorage.getItem('profile')])
 
   return (
     <Paper className={classes.paper}>
