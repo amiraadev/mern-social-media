@@ -32,7 +32,7 @@ function App() {
 <Router>
 
     <Container maxWidth="lg">
-          <NavBar/>
+          {/* <NavBar/> */}
           <Routes>
                <Route path='/' element={<Home currentId={currentId} setCurrentId={setCurrentId} />} />
                <Route path='/auth' element={<Auth/>} />

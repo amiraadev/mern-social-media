@@ -5,6 +5,7 @@ import Posts from '../Posts/Posts.jsx';
 import { useDispatch,useSelector } from 'react-redux';
 
 import useStyles from './homeStyle'
+import NavBar from '../NavBar/NavBar.jsx';
 
 function Home({currentId,setCurrentId}) {
     const posts = useSelector((state) => state.posts.data);
@@ -12,6 +13,8 @@ function Home({currentId,setCurrentId}) {
   const classes = useStyles();
 
   return (
+    <>
+       <NavBar/>
         <Grid container className={classes.mainContainer} justifyContent='space-between' alignItems='stretch'>
             <Grid item xs={12} sm={7}>
                 <Posts setCurrentId={setCurrentId}/>
@@ -20,6 +23,7 @@ function Home({currentId,setCurrentId}) {
                 <Form  currentId={currentId} setCurrentId={setCurrentId}/>
             </Grid>
         </Grid>
+    </>
   )
 }
 
