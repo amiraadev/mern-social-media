@@ -4,7 +4,7 @@ import mongoose from "mongoose"
 import postModel from "../models/postModel.js"
 import userModel from "../models/userModel.js"
 import {generateToken} from "../config-token.js"
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import Joi from "@hapi/joi";
 
 
@@ -28,8 +28,8 @@ const regiterValidate = Joi.object({
           return res.status(422).json({ error: "Password Confirmation Failed: The password and confirm password entries do not match." });
       }
       
-      const salt = await bcrypt.genSalt(5);
-      const hashedPassword = await bcrypt.hash(password,salt)
+      const salt = await bcryptjs.genSalt(5);
+      const hashedPassword = await bcryptjs.hash(password,salt)
        const user = await userModel.create({firstName,email,lastName,password:hashedPassword})
       
        return res.status(201).json({

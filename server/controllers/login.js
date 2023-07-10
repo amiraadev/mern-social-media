@@ -1,6 +1,6 @@
 import { generateToken } from "../config-token.js";
 import userModel from "../models/userModel.js"
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import Joi from "@hapi/joi";
 
 const loginValidate = Joi.object({   
@@ -20,7 +20,7 @@ async function loginUser(req, res) {
       });
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcryptjs.compare(password, user.password);
     if (!passwordMatch) {
       return res.status(401).json({ error: "Invalid email or password" });
     }
